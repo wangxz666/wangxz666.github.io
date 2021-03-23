@@ -5,6 +5,19 @@
   
   <entry>
     <title></title>
+    <link href="/2021/03/23/prototype/"/>
+    <url>/2021/03/23/prototype/</url>
+    
+    <content type="html"><![CDATA[<p><strong>原型：</strong></p><p>①所有引用类型都有一个__proto__(隐式原型)属性，属性值是一个普通的对象</p><p>②所有函数都有一个prototype(原型)属性，属性值是一个普通的对象</p><p>③所有引用类型的__proto__属性指向它构造函数的prototype</p><p><strong>原型链</strong>：</p><p>当访问一个对象的某个属性时，会先在这个对象本身属性上查找，如果没有找到，则会去它的__proto__隐式原型上查找，即它的构造函数的prototype，如果还没有找到就会再在构造函数的prototype的__proto__中查找，这样一层一层向上查找就会形成一个链式结构，我们称为原型链。</p><p>为什么使用原型？</p><p><strong>方法写在原型中比写在构造函数中消耗内存小，因为在内存中一个类的原型只有一个，写在原型中的行为可以被所有实例共享，实例化的时候并不会在实例内存中再复制一份。而写在类的方法，在实例化的时候都会复制一份，所以消耗的内存更高。</strong></p><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> foo();<br></code></pre></td></tr></table></figure><p>这里创建了一个对象a，是foo的一个实例。既然a是一个对象，它就有原型__proto__，那a的__proto__是怎么设定的？这里就引出了prototype，它是<strong>函数</strong>才有的一个属性，也是一个对象，一个函数创建的实例的__proto__就指向这个函数的prototype。所以a的__proto__被设定为foo.prototype，即：</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">a.__proto__</span> === foo.prototype<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure><p>当然foo.prototype也是个对象，它自然也有__proto__，默认指向Object.prototype，即：   </p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">foo.prototype.__proto__</span> === Object.prototype<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure><p><strong>而Object.prototype已经没有原型了，它的__proto__是null。这是JavaScript里一个很特殊的对象，它就是原型链的顶端。</strong></p><p><strong>以上就构成了由对象a开始的原型链：</strong>     </p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">a.__proto__</span> === foo.prototype<span class="hljs-comment">; </span><br><span class="hljs-attr">a.__proto__.__proto__</span> === Object.prototype<span class="hljs-comment">;        </span><br></code></pre></td></tr></table></figure><p>JavaScript因此而推断出：          </p><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livescript">a <span class="hljs-keyword">instanceof</span> foo === <span class="hljs-literal">true</span>; <br>a <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span> === <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure><p>​      <img src="../image/prototype.png" alt="prototype"></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
     <link href="/2021/03/17/uni-app/"/>
     <url>/2021/03/17/uni-app/</url>
     
